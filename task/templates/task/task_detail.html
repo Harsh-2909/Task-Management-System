@@ -4,32 +4,31 @@
         <div class="media-body">
             <div class="article-metadata">
                 <h2 class="article-title">{{ object.title }}</h2>
-                <h6 class="mr-2">Task is a part of {{ object.task_list }}'s Project</h6>
-                </br>
-                <h6 class="mr-2">Created by {{ object.created_by }}</h6>
-                <h6 class="mr-2">Assigned to {{ object.assigned_to }}</h6>
-                </br>
-                <small class="text-muted">Task created on {{ object.created_date|date:"F d, Y" }}</small>
-                </br>
-                <h6 class="mr-2">Status: {{ object.status }}</h6>
+            </div>
+            <h6 class="mr-2">Task is a part of {{ object.task_list }}'s Project</h6>
+            </br>
+            <h6 class="mr-2">Created by {{ object.created_by }}</h6>
+            <h6 class="mr-2">Assigned to {{ object.assigned_to }}</h6>
+            </br>
+            <small class="text-muted">Task created on {{ object.created_date|date:"F d, Y" }}</small>
+            </br>
+            <h6 class="mr-2">Status: {{ object.status }}</h6>
+            <div>
+            </br>
+                <p class="article-content">{{ object.description }}</p>
+            </div>
+            
+            {% if object.created_by == user %}
                 <div>
-                </br>
-                    <p class="article-content">{{ object.description }}</p>
+                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'task-update' object.id %}">Update</a>
+                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'task-delete' object.id %}">Delete</a>
                 </div>
-                
-                {% if object.created_by == user %}
-                    <div>
-                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'task-update' object.id %}">Update</a>
-                        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'task-delete' object.id %}">Delete</a>
-                    </div>
-                {% endif %}
-                {% if object.assigned_to == user %}
-                    <div>
-                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'task-update' object.id %}">Update</a>
-                    </div>
-                {% endif %}
-
-            </div>            
+            {% endif %}
+            {% if object.assigned_to == user %}
+                <div>
+                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'task-update' object.id %}">Update</a>
+                </div>
+            {% endif %}
         </div>
     </article>
 {% endblock content %}
