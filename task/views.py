@@ -30,6 +30,17 @@ class ProjectCreateView(CreateView, LoginRequiredMixin):
     model = Project
     fields = ['name']
 
+class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Task
+    fields = ['status']
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+    
+    def test_func(self):
+        task = self.get_object()
+        return self.request.user == task.created_by or self.request.user == task.assigned_to
+
 class TaskDeleteView(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
     model = Task
     success_url = '/'
