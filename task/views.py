@@ -27,6 +27,7 @@ class TaskListView(ListView, LoginRequiredMixin):
         user = get_object_or_404(User, username= self.request.user.username)
         return Task.objects.filter(assigned_to= user).order_by('-created_date')
 
+
 class TaskCreateView(CreateView, LoginRequiredMixin):
     model = Task
     fields = ['title', 'description', 'task_list', 'assigned_to']
@@ -58,7 +59,7 @@ class TaskDeleteView(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
         return self.request.user == task.created_by
 
 # @user_passes_test(lambda u: u.is_superuser)
-class ProjectListView(ListView):
+class ProjectListView(ListView, LoginRequiredMixin):
     model = Project
     template_name = 'task/project_list.html'
     context_object_name = 'projects'
