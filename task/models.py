@@ -14,6 +14,9 @@ class Project(models.Model):
     def __str__(self):
         return self.name
     
+    def get_absolute_url(self):
+        return reverse("home-page") 
+    
     class Meta:
         ordering = ["name"]
         verbose_name_plural = "Projects"
@@ -32,7 +35,6 @@ class Task(models.Model):
     task_list = models.ForeignKey(Project, on_delete= models.CASCADE, null= True)
     description = models.TextField(max_length= 500, null= True)
     created_date = models.DateField(default= timezone.now, blank= True)
-    # assigned_to = models.ForeignKey(User, on_delete= models.CASCADE)
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         null= True,
@@ -55,4 +57,4 @@ class Task(models.Model):
         return self.title
     
     def get_absolute_url(self):
-        return reverse("task-detail", kwargs= {"task_id": self.id}) 
+        return reverse("task-detail", kwargs= {"pk": self.pk}) 
