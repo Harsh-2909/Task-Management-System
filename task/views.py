@@ -1,6 +1,7 @@
 from django.http import request
 from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (ListView,
@@ -27,7 +28,7 @@ class TaskListView(ListView, LoginRequiredMixin):
         user = get_object_or_404(User, username= self.request.user.username)
         return Task.objects.filter(assigned_to= user).order_by('-created_date')
 
-
+@method_decorator(staff_member_required, name='dispatch')
 class TaskCreateView(CreateView, LoginRequiredMixin):
     model = Task
     fields = ['title', 'description', 'task_list', 'assigned_to']
@@ -58,13 +59,13 @@ class TaskDeleteView(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
         task = self.get_object()
         return self.request.user == task.created_by
 
-# @user_passes_test(lambda u: u.is_superuser)
 class ProjectListView(ListView, LoginRequiredMixin):
     model = Project
     template_name = 'task/project_list.html'
     context_object_name = 'projects'
     ordering = ['name']
 
+@method_decorator(staff_member_required, name='dispatch')
 class ProjectCreateView(CreateView, LoginRequiredMixin):
     model = Project
     fields = ['name']

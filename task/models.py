@@ -32,7 +32,7 @@ TASK_STATUS = (
 class Task(models.Model):
     '''The Task dataclass to store the task in database'''
     title = models.CharField(max_length= 70)
-    task_list = models.ForeignKey(Project, on_delete= models.CASCADE, null= True)
+    task_list = models.ForeignKey(Project, on_delete= models.CASCADE, null= True, verbose_name= 'Project')
     description = models.TextField(max_length= 500, null= True)
     created_date = models.DateField(default= timezone.now, blank= True)
     created_by = models.ForeignKey(
