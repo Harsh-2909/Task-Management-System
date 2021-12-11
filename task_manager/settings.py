@@ -127,6 +127,7 @@ MEDIA_URL = '/media/'
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
+LOGIN_REDIRECT_URL = "user-profile"
 LOGIN_URL = "user-login"
 
 # Default primary key field type
