@@ -1,0 +1,16 @@
+{% extends "task/base.html" %} 
+{% block content %}
+    <h1>Project List</h1>
+    </br>
+    {% for project in projects %}
+        <article class="media content-section">
+            <div class="media-body">
+                    {% comment %} <a class="mr-2" href="{% url 'project-detail' project.slug %}">{{ project.name }}</a> {% endcomment %}
+                    <h4>{{ project.name }}</h4>
+                    {% comment %} <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small> {% endcomment %}
+                {% comment %} <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+                <p class="article-content">{{ post.content }}</p> {% endcomment %}
+            </div>
+        </article>
+    {% endfor %}
+{% endblock content %}

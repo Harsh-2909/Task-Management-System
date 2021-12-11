@@ -30,6 +30,17 @@ class ProjectCreateView(CreateView, LoginRequiredMixin):
     model = Project
     fields = ['name']
 
+class ProjectDetailView(ListView):
+    pass
+#     model = Task
+#     template_name = 'blog/project_detail.html' # <app>/<model>_<viewtype>.html
+#     context_object_name = 'tasks'
+#     paginate_by = 5
+
+#     def get_queryset(self):
+#         # user = get_object_or_404(Task, task_list= self.kwargs.get('username'))
+#         return Task.objects.filter(task_list= self.project.name).order_by('-created_date')
+
 class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Task
     fields = ['status']
@@ -50,7 +61,8 @@ class TaskDeleteView(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
         return self.request.user == task.created_by
 
 # @user_passes_test(lambda u: u.is_superuser)
-# class ProjectListView(ListView):
-#     model = Project
-#     template_name = 'task/project_list.html'
-#     context_object_name = 'projects'
+class ProjectListView(ListView):
+    model = Project
+    template_name = 'task/project_list.html'
+    context_object_name = 'projects'
+    ordering = ['name']
