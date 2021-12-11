@@ -30,6 +30,14 @@ class ProjectCreateView(CreateView, LoginRequiredMixin):
     model = Project
     fields = ['name']
 
+class TaskDeleteView(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
+    model = Task
+    success_url = '/'
+
+    def test_func(self):
+        task = self.get_object()
+        return self.request.user == task.created_by
+
 # @user_passes_test(lambda u: u.is_superuser)
 # class ProjectListView(ListView):
 #     model = Project

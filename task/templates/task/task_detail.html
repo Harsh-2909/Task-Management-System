@@ -10,22 +10,24 @@
                 <h6 class="mr-2">Assigned to {{ object.assigned_to }}</h6>
                 </br>
                 <small class="text-muted">Task created on {{ object.created_date|date:"F d, Y" }}</small>
+                </br>
+                <h6 class="mr-2">Status: {{ object.status }}</h6>
                 <div>
                 </br>
                     <p class="article-content">{{ object.description }}</p>
                 </div>
                 
-                {% comment %} {% if object.created_by == user %}
+                {% if object.created_by == user %}
                     <div>
-                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
-                        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+                        {% comment %} <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'task-update' object.id %}">Update</a> {% endcomment %}
+                        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'task-delete' object.id %}">Delete</a>
                     </div>
                 {% endif %}
                 {% if object.assigned_to == user %}
                     <div>
-                        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Update</a>
+                        {% comment %} <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'task-update' object.id %}">Update</a> {% endcomment %}
                     </div>
-                {% endif %} {% endcomment %}
+                {% endif %}
 
             </div>            
         </div>
